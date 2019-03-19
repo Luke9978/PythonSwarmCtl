@@ -23,10 +23,10 @@ max_value = 2500 #change this if your ESC's max value is different or leave it b
 min_value = 1400  #change this if your ESC's min value is different or leave it be
 idle_value= 1000
 turn_value= 2000
-print "For first time launch, select calibrate"
-print "Arm will arm motors and then start them"
-print "Type the exact word for the function you want"
-print "calibrate OR arm OR expo OR stop OR calibrate_expo"
+print ("For first time launch, select calibrate")
+print ("Arm will arm motors and then start them")
+print ("Type the exact word for the function you want")
+print ("calibrate OR arm OR expo OR stop OR calibrate_expo")
                 
 def calibrate():   #This is the auto calibration procedure of a normal ESC
     pi.set_servo_pulsewidth(ESC_L, 0)

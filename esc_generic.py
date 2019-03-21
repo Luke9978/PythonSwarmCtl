@@ -2,13 +2,12 @@
 # Make sure your battery is not connected if you are going to calibrate it at first.
 # Since you are testing your motor, I hope you don't have your propeller attached to it otherwise you are in trouble my friend...?
 # This program is made by AGT @instructable.com. DO NOT REPUBLISH THIS PROGRAM... actually the program itself is harmful                                             pssst Its not, its safe.
-
-# import pigpio  # importing GPIO library
+import pigpio  # importing GPIO library
 import curses
 from prompt_toolkit import prompt
 import os  # importing os library so as to communicate with the system
 import time  # importing time library to make Rpi wait because its too impatient
-# os.system("sudo pigpiod")  # Launching GPIO library
+os.system("sudo pigpiod")  # Launching GPIO library
 # As i said it is too impatient and so if this delay is removed you will get an error
 time.sleep(1)
 ESC_L = 12  # Connect the left ESC in this GPIO pin
@@ -123,7 +122,7 @@ def set_servo_pulsewidth(*speeds): # can feed this function one or two speeds to
 
 def stop():  # This will stop every action your Pi is performing for ESC ofcourse.
     set_servo_pulsewidth(0)
-    # pi.stop() TODO Remove this; testing on PC
+    pi.stop()
     curses.nocbreak()
     screen.keypad(0)
     curses.echo()

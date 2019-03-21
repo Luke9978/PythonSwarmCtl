@@ -67,17 +67,17 @@ def arm():  # This is the arming procedure of an ESC
         elif button == ord(' '):
             stop()
         elif button == ord('w'):
-            set_servo_pulsewidth(2400)
-        elif button == ord('s'):
             set_servo_pulsewidth(2200)
+        elif button == ord('s'):
+            set_servo_pulsewidth(1800)
         elif button == ord('x'):
-            set_servo_pulsewidth(2000)
+            set_servo_pulsewidth(1450)
         elif button == ord('e'):
             set_servo_pulsewidth(1800)
         elif button == ord('d'):
             set_servo_pulsewidth(1600)
         elif button == ord('c'):
-            set_servo_pulsewidth(1450)
+            set_servo_pulsewidth(1600)
         elif button == ord('r'):
             set_servo_pulsewidth(2400)
         elif button == ord('f'):
@@ -122,7 +122,7 @@ print("arm OR stop")
 
 inp = input()
 if inp == "arm":
-    arm(False)
+    arm()
 elif inp == "stop":
     stop()
 else:

@@ -10,6 +10,7 @@ import time  # importing time library to make Rpi wait because its too impatient
 os.system("sudo pigpiod")  # Launching GPIO library
 # As i said it is too impatient and so if this delay is removed you will get an error
 time.sleep(1)
+
 ESC_L = 12  # Connect the left ESC in this GPIO pin
 ESC_R = 13  # Connect the right ESC in this GPIO pin
 pi = pigpio.pi()
@@ -18,7 +19,7 @@ min_value = 1400  # change this if your ESC's min value is different or leave it
 idle_value = 1000
 turn_value = 2000
 
-def calibrate(expo):  # This is the auto calibration procedure of a normal ESC
+def arm(expo):  # This is the arming procedure of an ESC
     set_servo_pulsewidth(0)
     print("Disconnect the battery and press Enter")
     inp = input()
@@ -32,10 +33,6 @@ def calibrate(expo):  # This is the auto calibration procedure of a normal ESC
             time.sleep(7)
             print("Motor is calibrated, now arming motor")
             set_servo_pulsewidth(0)
-            arm(expo)
-
-
-def arm(expo):  # This is the arming procedure of an ESC
     set_servo_pulsewidth(min_value)
     print("Disconnect battery if connected. Then, connect the battery and press Enter")
     inp = input()
@@ -53,63 +50,62 @@ def arm(expo):  # This is the arming procedure of an ESC
                 set_servo_pulsewidth(inp)
 
     elif inp == '' and expo:
-        if inp == '':
-            time.sleep(5)
-            set_servo_pulsewidth(min_value + 100)
-            time.sleep(1)
-            set_servo_pulsewidth(idle_value)
-            time.sleep(2)
-            print("Start manual control, left, right, forward, and idle")
+        time.sleep(5)
+        set_servo_pulsewidth(min_value + 100)
+        time.sleep(1)
+        set_servo_pulsewidth(idle_value)
+        time.sleep(2)
+        print("Start manual control, left, right, forward, and idle")
 
-            # Curses Setup
-            screen = curses.initscr()
-            curses.noecho()
-            curses.cbreak()
-            screen.keypad(True)
+        # Curses Setup
+        screen = curses.initscr()
+        curses.noecho()
+        curses.cbreak()
+        screen.keypad(True)
 
-            while True:
-                button = screen.getch()
+        while True:
+            button = screen.getch()
 
-                if button == ord('q'):
-                    break
-                elif button == curses.KEY_UP:
-                    print("Now moving straight forward")
-                    set_servo_pulsewidth(max_value)
-                elif button == curses.KEY_DOWN:
-                    print("Now idling")
-                    set_servo_pulsewidth(idle_value)
-                elif button == curses.KEY_LEFT:
-                    print("Now turning left")
-                    set_servo_pulsewidth(turn_value, max_value)
-                elif button == curses.KEY_RIGHT:
-                    print("Now turning right")
-                    set_servo_pulsewidth(max_value, turn_value)
-                elif button == ord(' '):
-                    stop()
-                elif button == ord('w'):
-                    set_servo_pulsewidth(2400)
-                elif button == ord('s'):
-                    set_servo_pulsewidth(2200)
-                elif button == ord('x'):
-                    set_servo_pulsewidth(2000)
-                elif button == ord('e'):
-                    set_servo_pulsewidth(1800)
-                elif button == ord('d'):
-                    set_servo_pulsewidth(1600)
-                elif button == ord('c'):
-                    set_servo_pulsewidth(1450)
-                elif button == ord('r'):
-                    set_servo_pulsewidth(2400)
-                elif button == ord('f'):
-                    set_servo_pulsewidth(2200)
-                elif button == ord('v'):
-                    set_servo_pulsewidth(2000)
-                elif button == ord('t'):
-                    set_servo_pulsewidth(1800)
-                elif button == ord('g'):
-                    set_servo_pulsewidth(1600)
-                elif button == ord('b'):
-                    set_servo_pulsewidth(1450)
+            if button == ord('q'):
+                break
+            elif button == curses.KEY_UP:
+                print("Now moving straight forward")
+                set_servo_pulsewidth(max_value)
+            elif button == curses.KEY_DOWN:
+                print("Now idling")
+                set_servo_pulsewidth(idle_value)
+            elif button == curses.KEY_LEFT:
+                print("Now turning left")
+                set_servo_pulsewidth(turn_value, max_value)
+            elif button == curses.KEY_RIGHT:
+                print("Now turning right")
+                set_servo_pulsewidth(max_value, turn_value)
+            elif button == ord(' '):
+                stop()
+            elif button == ord('w'):
+                set_servo_pulsewidth(2400)
+            elif button == ord('s'):
+                set_servo_pulsewidth(2200)
+            elif button == ord('x'):
+                set_servo_pulsewidth(2000)
+            elif button == ord('e'):
+                set_servo_pulsewidth(1800)
+            elif button == ord('d'):
+                set_servo_pulsewidth(1600)
+            elif button == ord('c'):
+                set_servo_pulsewidth(1450)
+            elif button == ord('r'):
+                set_servo_pulsewidth(2400)
+            elif button == ord('f'):
+                set_servo_pulsewidth(2200)
+            elif button == ord('v'):
+                set_servo_pulsewidth(2000)
+            elif button == ord('t'):
+                set_servo_pulsewidth(1800)
+            elif button == ord('g'):
+                set_servo_pulsewidth(1600)
+            elif button == ord('b'):
+                set_servo_pulsewidth(1450)
 
 def set_servo_pulsewidth(*speeds): # can feed this function one or two speeds to set L R respoectively
     if len(speeds) == 2:
@@ -142,11 +138,11 @@ print("calibrate OR arm OR expo OR stop OR calibrate_expo")
 
 inp = input()
 if inp == "calibrate":
-    calibrate(False)
+    arm(False)
 elif inp == "arm":
     arm(False)
 elif inp == "calibrate_expo":
-    calibrate(True)
+    arm(True)
 elif inp == "expo":
     arm(True)
 elif inp == "stop":

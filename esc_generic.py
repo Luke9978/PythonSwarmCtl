@@ -12,7 +12,7 @@ os.system("sudo pigpiod")  # Launching GPIO library
 time.sleep(1)
 ESC_L = 12  # Connect the left ESC in this GPIO pin
 ESC_R = 13  # Connect the right ESC in this GPIO pin
-#pi = pigpio.pi()
+pi = pigpio.pi()
 max_value = 2500  # change this if your ESC's max value is different or leave it be
 min_value = 1400  # change this if your ESC's min value is different or leave it be
 idle_value = 1000

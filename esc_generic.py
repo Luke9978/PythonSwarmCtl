@@ -115,7 +115,6 @@ def stop():  # This will stop every action your Pi is performing for ESC ofcours
 ###############################################################################
 
 set_servo_pulsewidth(0)
-print("For first time launch, select calibrate")
 print("Arm will arm motors and then start them")
 print("Type the exact word for the function you want")
 print("arm OR stop")

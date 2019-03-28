@@ -7,9 +7,9 @@ GPIO.setup(24, GPIO.OUT)
 GPIO.setup(26, GPIO.OUT)
 #Speed Varibles Pins
 PWM1 = GPIO.PWM(12, 50)
-PWM1.start(0)# This is the start value for the duty cycle
+PWM1.start(0)   # This is the start value for the duty cycle
 PWM2 = GPIO.PWM(13, 50)
-PWM2.start(0)# This is the start value for the duty cycle
+PWM2.start(0)   # This is the start value for the duty cycle
 #Directional Varibles
 D1 = 24
 D2 = 26
@@ -21,7 +21,7 @@ screen.keypad(1)
 #This is where the user input Starts
 while True:
         char = screen.getch()
-        if char == ord('q'):
+        if char == ord('k'):
             break
         elif char == ord('w'):
             GPIO.output(D1, True)
@@ -31,7 +31,7 @@ while True:
             print('Direction Set Backward')
             GPIO.output(D1, False)
             GPIO.output(D2, False)
-        elif  char == ord('q'):
+        elif char == ord('q'):
             print('Speed Set High left')
             PWM1.ChangeDutyCycle(50)
         elif char == ord('e'):

@@ -4,7 +4,6 @@
 # This program is made by AGT @instructable.com. DO NOT REPUBLISH THIS PROGRAM... actually the program itself is harmful                                             pssst Its not, its safe.
 import pigpio  # importing GPIO library
 import curses
-from prompt_toolkit import prompt
 import os  # importing os library so as to communicate with the system
 import time  # importing time library to make Rpi wait because its too impatient
 os.system("sudo pigpiod")  # Launching GPIO library

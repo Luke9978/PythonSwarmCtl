@@ -6,6 +6,7 @@ import pigpio  # importing GPIO library
 import curses
 import os  # importing os library so as to communicate with the system
 import time  # importing time library to make Rpi wait because its too impatient
+import serial
 os.system("sudo pigpiod")  # Launching GPIO library
 # As i said it is too impatient and so if this delay is removed you will get an error
 time.sleep(1)
@@ -18,15 +19,17 @@ min_value = 1400  # change this if your ESC's min value is different or leave it
 idle_value = 1000
 turn_value = 2000
 
+ser = serial.Serial("/dev/serial0",9600)
+
 def arm():  # This is the arming procedure of an ESC
     set_servo_pulsewidth(0)
     print("Disconnect the battery and press Enter")
-    inp = input()
-    if inp == '':
+    #inp = input()
+    if '' == '':
         set_servo_pulsewidth(max_value)
         print("Connect the battery NOW.. you will here two beeps, then wait for a gradual falling tone then press Enter")
         inp = input()
-        if inp == '':
+        if '' == '':
             time.sleep(2)
             set_servo_pulsewidth(min_value)
             time.sleep(7)
@@ -41,35 +44,36 @@ def arm():  # This is the arming procedure of an ESC
     print("Start manual control, left, right, forward, and idle")
 
     # Curses Setup
-    screen = curses.initscr()
-    curses.noecho()
-    curses.cbreak()
-    screen.keypad(True)
+    #screen = curses.initscr()
+    #curses.noecho()
+    #curses.cbreak()
+    #screen.keypad(True)
 
     while True:
-        button = screen.getch()
-
+        if ser.inWaiting() !=0:
+            rec = str(ser.readline())
+            print(rec)
         if button == ord('q'):
             break
-        elif button == curses.KEY_UP:
-            print("Now moving straight forward")
-            set_servo_pulsewidth(max_value)
-        elif button == curses.KEY_DOWN:
-            print("Now idling")
-            set_servo_pulsewidth(idle_value)
-        elif button == curses.KEY_LEFT:
-            print("Now turning left")
-            set_servo_pulsewidth(turn_value, max_value)
-        elif button == curses.KEY_RIGHT:
-            print("Now turning right")
-            set_servo_pulsewidth(max_value, turn_value)
-        elif button == ord(' '):
+        #elif button == curses.KEY_UP:
+            #print("Now moving straight forward")
+            #set_servo_pulsewidth(max_value)
+        #elif button == curses.KEY_DOWN:
+            #print("Now idling")
+            #set_servo_pulsewidth(idle_value)
+        #elif button == curses.KEY_LEFT:
+            #print("Now turning left")
+            #set_servo_pulsewidth(turn_value, max_value)
+        #elif button == curses.KEY_RIGHT:
+            #print("Now turning right")
+            #set_servo_pulsewidth(max_value, turn_value)
+        elif ' ' in rec:
             stop()
-        elif button == ord('w'):
+        elif 'w' in rec:
             set_servo_pulsewidth(2200)
-        elif button == ord('s'):
+        elif 's' in rec:
             set_servo_pulsewidth(1800)
-        elif button == ord('x'):
+        elif 'x' in rec:
             set_servo_pulsewidth(1450)
         elif button == ord('e'):
             set_servo_pulsewidth(1800)
